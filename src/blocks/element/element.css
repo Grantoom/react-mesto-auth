@@ -1,0 +1,9 @@
+.element {
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    width: 282px;
+    background: #FFF;
+    border-radius: 10px;
+}

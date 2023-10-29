@@ -1,0 +1,10 @@
+.popup__label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: baseline;
+  }
+  
+  .popup__label:last-child {
+    margin-top: 13px;
+  }

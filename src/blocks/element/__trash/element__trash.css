@@ -1,0 +1,22 @@
+.element__trash {
+    position: absolute;
+    border: none;
+    width: 18px;
+    height: 19px;
+    cursor: pointer;
+    background: url('../../../images/Trash.svg') center no-repeat;
+    flex-shrink: 0;
+    background-size: cover;
+    background-color: transparent;
+    transition: opacity .5s ease-in-out;
+    top: 20px;
+    right: 20px;
+}
+
+.element__trash:hover {
+    opacity: .5;
+}
+
+.element__trash_hidden {
+    visibility: hidden;
+}

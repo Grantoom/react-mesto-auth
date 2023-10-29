@@ -1,0 +1,7 @@
+.element__vector_active {
+    background: url('../../../../images/blackHearth.svg') center no-repeat;
+    border: none;
+    width: 22px;
+    height: 19px;
+    cursor: pointer;
+}

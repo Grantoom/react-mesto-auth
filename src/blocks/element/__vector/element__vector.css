@@ -1,0 +1,16 @@
+.element__vector {
+    border: none;
+    width: 22px;
+    height: 19px;
+    cursor: pointer;
+    background: url('../../../images/hearth.svg') center no-repeat;
+    flex-shrink: 0;
+    background-size: cover;
+    background-color: transparent;
+    transition: opacity .5s ease-in-out;
+}
+
+.element__vector:hover {
+    opacity: .5;
+}
+

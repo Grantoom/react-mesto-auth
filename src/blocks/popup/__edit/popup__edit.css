@@ -1,0 +1,32 @@
+.popup__edit {
+    background-color: rgba(0, 0, 0, 1);
+    padding: 0;
+    color: #fff;
+    margin: 48px 36px 37px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: none;
+    width: 358px;
+    height: 50px;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    transition: opacity .25s ease-in-out;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__edit {
+        width: 238px;
+        height: 46px;
+        font-size: 14px;
+        line-height: 17px;
+        margin: 45px 22px 25px;
+    }
+}
+
+.popup__edit:hover {
+    opacity: .8;
+}

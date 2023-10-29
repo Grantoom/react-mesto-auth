@@ -1,0 +1,27 @@
+.popup__exit {
+    border: none;
+    position: absolute;
+    background-color: transparent;
+    background: url('../../../images/krest.svg') center no-repeat;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    top: -40px;
+    right: -40px;
+    background-size: cover;
+    
+}
+
+@media screen and (max-width: 767px) {
+    .popup__exit {
+        top: -40px;
+        right: 0;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.popup__exit:hover {
+    opacity: .6;
+}

@@ -1,0 +1,28 @@
+.profile__section-title {
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 48px;
+    color: #FFFFFF;
+    margin: 0;
+    max-width: 294px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 1023px) {
+    .profile__section-title {
+        font-size: 38px;
+    }
+  }
+
+@media screen and (max-width: 767px) {
+    .profile__section-title {
+        max-width: 189px;
+        font-size: 27px;
+        line-height: 33px;
+        text-align: center;
+    }
+}
