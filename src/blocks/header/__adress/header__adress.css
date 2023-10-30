@@ -1,0 +1,9 @@
+.header__address {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.22;
+    color: #ffffff;
+    padding: 9px 0;
+}

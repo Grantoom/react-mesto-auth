@@ -1,0 +1,4 @@
+.header__box {
+    gap: 24px;
+    display: flex;
+}

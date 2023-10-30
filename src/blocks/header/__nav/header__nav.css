@@ -1,0 +1,18 @@
+.header__nav {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 22px;
+    font-size: 18px;
+    transition: opacity .3s ease;
+    color: #FFFFFF;
+    text-decoration: unset;
+  }
+  
+  .header__nav:hover {
+    opacity: .6;
+  }
+  
+  .header__nav:focus {
+    opacity: .6;
+  }

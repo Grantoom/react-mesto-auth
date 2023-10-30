@@ -1,0 +1,15 @@
+.form__save-button_theme_dark {
+    background: #FFFFFF;
+    color: #000000;
+    margin-top: 216px;
+    margin-bottom: 0;
+    transition: opacity .3s ease;
+  }
+  
+  .form__save-button_theme_dark:hover {
+    opacity: 0.85;
+  }
+  
+  .form__save-button_theme_dark:focus {
+    opacity: 0.85;
+  }
