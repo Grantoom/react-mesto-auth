@@ -1,0 +1,22 @@
+.header__button {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    transition: opacity .3s ease;
+    font-size: 18px;
+    line-height: 1.22;
+    padding: 0;
+    margin: 9px 0;
+    background: unset;
+    border: none;
+    cursor: pointer;
+    color: #A9A9A9;
+  }
+
+  .header__button:hover {
+    opacity: .6;
+  }
+  
+  .header__button:focus {
+    opacity: .6;
+  }
