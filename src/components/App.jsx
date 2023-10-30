@@ -247,17 +247,20 @@ function App() {
           />
 
           <Routes>
-            <Route path="/sign-up">
-                <Register
-                    onRegistration={handleRegistration}
-                />
+            <Route path="/sign-up" elemetn={
+              <>
+                <Register onRegistration={handleRegistration}/>
+              </>
+              
+            }>
             </Route>
 
-            <Route path="/sign-in">
-                <Login
-                    onAuth={handleAuth}
-                    onCheckToken={handleCheckToken}
-                />
+            <Route path="/sign-in" element={
+              <>
+                <Login onAuth={handleAuth} onCheckToken={handleCheckToken}/>
+              </>
+            }>
+                
             </Route>
 
             <ProtectedRoute
@@ -273,9 +276,8 @@ function App() {
               onCardDelete={handleCardDelete}
             />
 
-            <Route path="/">
-                    {loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />}
-            </Route>
+            <Route path="/" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />} />
+              
           </Routes>
 
           <Footer />
