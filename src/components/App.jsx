@@ -249,6 +249,8 @@ function App() {
 
           <ProtectedRoute
             component={Main}
+            path="/"
+            loggedIn={loggedIn}
             cards={cards}
             onEditProfile={handleEditProfileClick}
             onEditAvatar={handleEditAvatarClick}
@@ -294,6 +296,12 @@ function App() {
           buttonText="Да"
           buttonClass="popup__type-delete"
         />
+
+        <InfoTooltip
+          isopen={isInfoTooltipOpen}
+          onClose={closeAllPopup}
+          isSucces={isSuccesLogin}
+        />    
       </div>
     </CurrentUserContext.Provider>
   );
