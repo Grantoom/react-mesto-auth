@@ -46,7 +46,17 @@ function App() {
       .catch((err) => console.log(`Что-то пошло не так: ${err}`));
   }, []);
 
-  
+   React.useEffect(() => {
+        handleCheckToken();
+    }, []);
+
+    React.useEffect(() => {
+        loggedIn && navigate.push('/');
+      }, [loggedIn]);
+
+    function handleInfoTooltipOpen() {
+        setIsInfoTooltipOpen(true);
+    }
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -148,6 +158,67 @@ function App() {
         console.log(err);
       });
   }
+
+  function handleSignOut() {
+    setLoggedIn(false);
+    localStorage.removeItem('jwt');
+    navigate.push('/sign-in');
+  }
+
+  function handleRegistration(data) {
+    auth.register(data)
+      .then(
+          () => {
+              setIsSuccesLogin(true);
+              navigate.push('/sign-in');
+          }
+      )
+
+      .catch((err) => {
+          console.log(err);
+          setIsSuccesLogin(false);
+      })
+
+      .finally(() => {
+          handleInfoTooltipOpen();
+      })
+  }
+
+  function handleAuth(info) {
+    setAuthUserEmail(info.email);
+    auth.auth(info)
+      .then(
+          (info) => {
+              setLoggedIn(true);
+              localStorage.setItem('jwt', info.token);
+              navigate.push('/');
+          }
+      )
+
+      .catch((err) => {
+          console.log(err);
+          setIsSuccesLogin(false);
+          handleInfoTooltipOpen();
+      })
+  }
+
+  const handleCheckToken = () => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.checkToken(token)
+        .then((response) => {
+            if (response) {
+                setAuthUserEmail(response.data.email);
+                setLoggedIn(true);
+                navigate.push('/');
+            }
+        })
+
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
