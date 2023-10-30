@@ -15,4 +15,4 @@
 
 **Проект**
 
-* [Ссылка на проект в GitHub Pages](https://Grantoom.github.io/mesto-react)
+* [Ссылка на проект в GitHub Pages](#)
