@@ -81,6 +81,7 @@ function App() {
     setPhotoPopupOpen(false);
     setImagePopupOpen(false);
     setDeleteOpen(false);
+    setIsInfoTooltipOpen(false);
   };
 
   function handleCardLike(card) {
@@ -240,7 +241,11 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
-          <Header />
+          <Header 
+             loggedIn={loggedIn}
+             onSignOut={handleSignOut}
+             authUserEmail={authUserEmail}
+          />
 
           <ProtectedRoute
             component={Main}
