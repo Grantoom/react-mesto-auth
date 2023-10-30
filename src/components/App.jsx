@@ -1,5 +1,6 @@
 import "../index.css";
 import api from "../utils/Api.js";
+import React from "react";
 
 import auth from '../utils/auth.js';
 import ProtectedRoute from './ProtectedRoute';
@@ -8,8 +9,6 @@ import InfoTooltip from './InfoTooltip';
 import Login from './Login';
 import Register from './Register';
 
-
-import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -247,18 +246,37 @@ function App() {
              authUserEmail={authUserEmail}
           />
 
-          <ProtectedRoute
-            component={Main}
-            path="/"
-            loggedIn={loggedIn}
-            cards={cards}
-            onEditProfile={handleEditProfileClick}
-            onEditAvatar={handleEditAvatarClick}
-            onAddPhoto={handleAddPlaceClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-          />
+          <Routes>
+            <Route path="/sign-up">
+                <Register
+                    onRegistration={handleRegistration}
+                />
+            </Route>
+
+            <Route path="/sign-in">
+                <Login
+                    onAuth={handleAuth}
+                    onCheckToken={handleCheckToken}
+                />
+            </Route>
+
+            <ProtectedRoute
+              component={Main}
+              path="/"
+              loggedIn={loggedIn}
+              cards={cards}
+              onEditProfile={handleEditProfileClick}
+              onEditAvatar={handleEditAvatarClick}
+              onAddPhoto={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+            />
+
+            <Route path="/">
+                    {loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />}
+            </Route>
+          </Routes>
 
           <Footer />
         </div>
