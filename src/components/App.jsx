@@ -50,7 +50,7 @@ function App() {
     }, []);
 
     React.useEffect(() => {
-        loggedIn && navigate.push('/');
+        loggedIn && navigate('/');
       }, [loggedIn]);
 
     function handleInfoTooltipOpen() {
@@ -162,7 +162,7 @@ function App() {
   function handleSignOut() {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
-    navigate.push('/sign-in');
+    navigate('/sign-in');
   }
 
   function handleRegistration(data) {
@@ -170,7 +170,7 @@ function App() {
       .then(
           () => {
               setIsSuccesLogin(true);
-              navigate.push('/sign-in');
+              navigate('/sign-in');
           }
       )
 
@@ -191,7 +191,7 @@ function App() {
           (info) => {
               setLoggedIn(true);
               localStorage.setItem('jwt', info.token);
-              navigate.push('/');
+              navigate('/');
           }
       )
 
@@ -210,7 +210,7 @@ function App() {
             if (response) {
                 setAuthUserEmail(response.data.email);
                 setLoggedIn(true);
-                navigate.push('/');
+                navigate('/');
             }
         })
 
@@ -247,7 +247,7 @@ function App() {
           />
 
           <Routes>
-            <Route path="/sign-up" elemetn={
+            <Route path="/sign-up" element={
               <>
                 <Register onRegistration={handleRegistration}/>
               </>
@@ -263,17 +263,9 @@ function App() {
                 
             </Route>
 
-            <ProtectedRoute
-              component={Main}
+            <Route
               path="/"
-              loggedIn={loggedIn}
-              cards={cards}
-              onEditProfile={handleEditProfileClick}
-              onEditAvatar={handleEditAvatarClick}
-              onAddPhoto={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
+              element={<ProtectedRoute loggedIn={loggedIn} component={Main} cards={cards} onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPhoto={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />}
             />
 
             <Route path="/" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />} />
