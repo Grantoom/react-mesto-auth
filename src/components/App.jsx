@@ -220,6 +220,22 @@ function App() {
     }
   };
 
+  const isOpen = isAvatarPopupOpen || isProfilePopupOpen || isPhotoPopupOpen || isImagePopupOpen;
+
+  React.useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopup();
+      }
+    }
+    if(isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]) 
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
