@@ -5,7 +5,6 @@ const Sign = ({ title, buttonText, onSubmit, linkMarkup, children }) => {
         <form
             className='form form_theme_dark'
             onSubmit={onSubmit}
-            noValidate
         >
             <h2
                 className='form__header form__header_theme_dark'

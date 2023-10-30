@@ -2,12 +2,12 @@ import "../index.css";
 import api from "../utils/Api.js";
 import React from "react";
 
-import auth from '../utils/auth.js';
-import ProtectedRoute from './ProtectedRoute';
-import { Navigate, useNavigate, Route, Routes } from 'react-router-dom'
-import InfoTooltip from './InfoTooltip';
-import Login from './Login';
-import Register from './Register';
+import auth from "../utils/auth.js";
+import ProtectedRoute from "./ProtectedRoute";
+import { Navigate, useNavigate, Route, Routes } from "react-router-dom";
+import InfoTooltip from "./InfoTooltip";
+import Login from "./Login";
+import Register from "./Register";
 
 import Header from "./Header";
 import Main from "./Main";
@@ -37,25 +37,27 @@ function App() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCards()])
-      .then(([userInfo, cardsData]) => {
-        setCurrentUser(userInfo);
-        setCards(cardsData);
-      })
-      .catch((err) => console.log(`Что-то пошло не так: ${err}`));
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getCards()])
+        .then(([userInfo, cardsData]) => {
+          setCurrentUser(userInfo);
+          setCards(cardsData);
+        })
+        .catch((err) => console.log(`Что-то пошло не так: ${err}`));
+    }
+  }, [loggedIn]);
+
+  React.useEffect(() => {
+    handleCheckToken();
   }, []);
 
-   React.useEffect(() => {
-        handleCheckToken();
-    }, []);
+  React.useEffect(() => {
+    loggedIn && navigate("/");
+  }, [loggedIn]);
 
-    React.useEffect(() => {
-        loggedIn && navigate('/');
-      }, [loggedIn]);
-
-    function handleInfoTooltipOpen() {
-        setIsInfoTooltipOpen(true);
-    }
+  function handleInfoTooltipOpen() {
+    setIsInfoTooltipOpen(true);
+  }
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -161,115 +163,125 @@ function App() {
 
   function handleSignOut() {
     setLoggedIn(false);
-    localStorage.removeItem('jwt');
-    navigate('/sign-in');
+    localStorage.removeItem("jwt");
+    navigate("/sign-in");
   }
 
   function handleRegistration(data) {
-    auth.register(data)
-      .then(
-          () => {
-              setIsSuccesLogin(true);
-              navigate('/sign-in');
-          }
-      )
+    auth
+      .register(data)
+      .then(() => {
+        setIsSuccesLogin(true);
+        navigate("/sign-in");
+      })
 
       .catch((err) => {
-          console.log(err);
-          setIsSuccesLogin(false);
+        console.log(err);
+        setIsSuccesLogin(false);
       })
 
       .finally(() => {
-          handleInfoTooltipOpen();
-      })
+        handleInfoTooltipOpen();
+      });
   }
 
   function handleAuth(info) {
     setAuthUserEmail(info.email);
-    auth.auth(info)
-      .then(
-          (info) => {
-              setLoggedIn(true);
-              localStorage.setItem('jwt', info.token);
-              navigate('/');
-          }
-      )
+    auth
+      .auth(info)
+      .then((info) => {
+        setLoggedIn(true);
+        localStorage.setItem("jwt", info.token);
+        navigate("/");
+      })
 
       .catch((err) => {
-          console.log(err);
-          setIsSuccesLogin(false);
-          handleInfoTooltipOpen();
-      })
+        console.log(err);
+        setIsSuccesLogin(false);
+        handleInfoTooltipOpen();
+      });
   }
 
   const handleCheckToken = () => {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
     if (token) {
-      auth.checkToken(token)
+      auth
+        .checkToken(token)
         .then((response) => {
-            if (response) {
-                setAuthUserEmail(response.data.email);
-                setLoggedIn(true);
-                navigate('/');
-            }
+          if (response) {
+            setAuthUserEmail(response.data.email);
+            setLoggedIn(true);
+            navigate("/");
+          }
         })
 
         .catch((err) => {
-            console.log(err);
+          console.log(err);
         });
     }
   };
 
-  const isOpen = isAvatarPopupOpen || isProfilePopupOpen || isPhotoPopupOpen || isImagePopupOpen;
+  const isOpen =
+    isAvatarPopupOpen ||
+    isProfilePopupOpen ||
+    isPhotoPopupOpen ||
+    isImagePopupOpen;
 
   React.useEffect(() => {
     function closeByEscape(evt) {
-      if(evt.key === 'Escape') {
+      if (evt.key === "Escape") {
         closeAllPopup();
       }
     }
-    if(isOpen) {
-      document.addEventListener('keydown', closeByEscape);
+    if (isOpen) {
+      document.addEventListener("keydown", closeByEscape);
       return () => {
-        document.removeEventListener('keydown', closeByEscape);
-      }
+        document.removeEventListener("keydown", closeByEscape);
+      };
     }
-  }, [isOpen]) 
+  }, [isOpen]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
-          <Header 
-             loggedIn={loggedIn}
-             onSignOut={handleSignOut}
-             authUserEmail={authUserEmail}
+          <Header
+            loggedIn={loggedIn}
+            onSignOut={handleSignOut}
+            authUserEmail={authUserEmail}
           />
 
           <Routes>
-            <Route path="/sign-up" element={
-              <>
-                <Register onRegistration={handleRegistration}/>
-              </>
-              
-            }>
-            </Route>
-
-            <Route path="/sign-in" element={
-              <>
-                <Login onAuth={handleAuth} onCheckToken={handleCheckToken}/>
-              </>
-            }>
-                
-            </Route>
-
+            
+            <Route
+              path="/sign-up"
+              element={<Register onRegistration={handleRegistration} />}
+            />
+            <Route
+              path="/sign-in"
+              element={
+                <Login onAuth={handleAuth} onCheckToken={handleCheckToken} />
+              }
+            />
             <Route
               path="/"
-              element={<ProtectedRoute loggedIn={loggedIn} component={Main} cards={cards} onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPhoto={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />}
+              element={
+                loggedIn ? (
+                  <Main
+                    cards={cards}
+                    onEditProfile={handleEditProfileClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onAddPhoto={handleAddPlaceClick}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                  />
+                ) : (
+                  <Navigate to="/sign-in" />
+                )
+              }
             />
-
-            <Route path="/" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />} />
-              
+            <Route path="/*" element={<Navigate to="/sign-in" />} />
           </Routes>
 
           <Footer />
@@ -313,7 +325,7 @@ function App() {
           isopen={isInfoTooltipOpen}
           onClose={closeAllPopup}
           isSucces={isSuccesLogin}
-        />    
+        />
       </div>
     </CurrentUserContext.Provider>
   );
