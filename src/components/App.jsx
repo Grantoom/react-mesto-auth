@@ -26,10 +26,16 @@ function App() {
   const [isPhotoPopupOpen, setPhotoPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
   const [isDeleteOpen, setDeleteOpen] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
 
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isSuccesLogin, setIsSuccesLogin] = React.useState(false);
+  const [authUserEmail, setAuthUserEmail] = React.useState(null);
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
@@ -39,6 +45,8 @@ function App() {
       })
       .catch((err) => console.log(`Что-то пошло не так: ${err}`));
   }, []);
+
+  
 
   function handleCardClick(card) {
     setSelectedCard(card);
