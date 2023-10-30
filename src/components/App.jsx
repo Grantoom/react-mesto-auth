@@ -1,6 +1,14 @@
 import "../index.css";
 import api from "../utils/Api.js";
 
+import auth from '../utils/auth.js';
+import ProtectedRoute from './ProtectedRoute';
+import { Navigate, useNavigate, Route, Routes } from 'react-router-dom'
+import InfoTooltip from './InfoTooltip';
+import Login from './Login';
+import Register from './Register';
+
+
 import React from "react";
 import Header from "./Header";
 import Main from "./Main";
@@ -16,9 +24,10 @@ function App() {
   const [isAvatarPopupOpen, setAvatarPopupOpen] = React.useState(false);
   const [isProfilePopupOpen, setProfilePopupOpen] = React.useState(false);
   const [isPhotoPopupOpen, setPhotoPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
   const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
   const [isDeleteOpen, setDeleteOpen] = React.useState(false);
+
+  const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
 
@@ -138,7 +147,8 @@ function App() {
         <div className="page">
           <Header />
 
-          <Main
+          <ProtectedRoute
+            component={Main}
             cards={cards}
             onEditProfile={handleEditProfileClick}
             onEditAvatar={handleEditAvatarClick}
